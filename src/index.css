@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+.dark-theme {
+  filter: invert(1) hue-rotate(180deg);
+  background-color: #f8fafc;
+}
+
+.dark-theme img, 
+.dark-theme video,
+.dark-theme [style*="background-image"] {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Override Chrome autofill ugly background */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-text-fill-color: #111827 !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
