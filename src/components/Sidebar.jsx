@@ -56,7 +56,6 @@ export default function Sidebar({ currentView, setCurrentView }) {
           <p className="text-xs text-indigo-700 mb-3">Your marketing assistant is ready.</p>
           <button 
             onClick={() => {
-              setCurrentView('copilot');
               window.dispatchEvent(new CustomEvent('open-copilot'));
             }}
             className="w-full bg-white text-indigo-600 text-sm font-medium py-1.5 rounded-lg shadow-sm border border-indigo-100 hover:bg-indigo-50 transition-colors flex items-center justify-center gap-2"
