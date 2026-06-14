@@ -73,6 +73,7 @@ export default function Sidebar({ currentView, setCurrentView, isOpen, closeMenu
           </button>
         </div>
       </div>
+      </div>
     </>
   );
 }
