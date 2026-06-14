@@ -18,6 +18,7 @@ export default function Profile({ user, onUpdate }) {
     try {
       await axios.put('/api/auth/profile', formData);
       await onUpdate();
+      window.dispatchEvent(new CustomEvent('profile-updated'));
       toast.success('Profile updated successfully!');
     } catch (err) {
       toast.error('Failed to update profile');

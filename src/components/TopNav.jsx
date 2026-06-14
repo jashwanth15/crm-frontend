@@ -37,17 +37,19 @@ export default function TopNav({ openCopilot, onLogout, onNavigate }) {
     }
   };
 
+  const fetchUser = async () => {
+    try {
+      const res = await axios.get('/api/auth/profile');
+      setUser(res.data);
+    } catch (err) {
+      console.error('Failed to load user profile in TopNav', err);
+    }
+  };
+
   useEffect(() => {
     // Attempt to load the user profile for the avatar
-    const fetchUser = async () => {
-      try {
-        const res = await axios.get('/api/auth/profile');
-        setUser(res.data);
-      } catch (err) {
-        console.error('Failed to load user profile in TopNav', err);
-      }
-    };
     fetchUser();
+    window.addEventListener('profile-updated', fetchUser);
 
     // Close dropdowns on click outside
     const handleClickOutside = (event) => {
@@ -59,7 +61,10 @@ export default function TopNav({ openCopilot, onLogout, onNavigate }) {
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      window.removeEventListener('profile-updated', fetchUser);
+    };
   }, []);
 
   const initials = user?.name ? user.name.split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase() : 'JD';
