@@ -36,6 +36,7 @@ export default function AppLayout({ onLogout }) {
   const [currentView, setCurrentView] = useState('dashboard');
   const [viewId, setViewId] = useState(null);
   const [isCopilotOpen, setIsCopilotOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     // Check theme globally
@@ -61,6 +62,7 @@ export default function AppLayout({ onLogout }) {
   const handleNavigate = (view, id = null) => {
     setCurrentView(view);
     setViewId(id);
+    setIsMobileMenuOpen(false);
   };
 
   const renderView = () => {
@@ -91,12 +93,21 @@ export default function AppLayout({ onLogout }) {
         openCopilot={() => setIsCopilotOpen(true)} 
         onLogout={onLogout}
         onNavigate={handleNavigate}
+        toggleMobileMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       />
       
       <div className="flex-1 flex relative overflow-hidden">
-        <Sidebar currentView={currentView} setCurrentView={setCurrentView} />
+        <Sidebar 
+          currentView={currentView} 
+          setCurrentView={(view) => {
+            setCurrentView(view);
+            setIsMobileMenuOpen(false);
+          }} 
+          isOpen={isMobileMenuOpen}
+          closeMenu={() => setIsMobileMenuOpen(false)}
+        />
         
-        <main className="flex-1 overflow-y-auto p-6 scroll-smooth bg-[#f8fafc]">
+        <main className="flex-1 overflow-y-auto p-4 md:p-6 scroll-smooth bg-[#f8fafc]">
           <div className="max-w-7xl mx-auto pb-12 h-full">
             {renderView()}
           </div>

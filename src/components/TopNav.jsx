@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, Bell, Sparkles, User, Settings, LogOut, CheckCheck, Megaphone, Users, ShoppingCart } from 'lucide-react';
+import { Search, Bell, Sparkles, User, Settings, LogOut, CheckCheck, Megaphone, Users, ShoppingCart, Menu } from 'lucide-react';
 import axios from 'axios';
 
-export default function TopNav({ openCopilot, onLogout, onNavigate }) {
+export default function TopNav({ openCopilot, onLogout, onNavigate, toggleMobileMenu }) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -110,16 +110,22 @@ export default function TopNav({ openCopilot, onLogout, onNavigate }) {
   const unreadCount = notifications.filter(n => !n.read).length;
 
   return (
-    <header className="h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-6 sticky top-0 z-10 shadow-sm relative">
+    <header className="h-16 bg-white/80 backdrop-blur-md border-b border-gray-200 flex items-center justify-between px-4 md:px-6 sticky top-0 z-20 shadow-sm relative">
       <div className="flex items-center">
-        <div className="flex items-center gap-3 mr-12 w-48">
+        <button 
+          onClick={toggleMobileMenu}
+          className="mr-3 p-2 text-gray-500 hover:bg-gray-100 rounded-md md:hidden"
+        >
+          <Menu size={20} />
+        </button>
+        <div className="flex items-center gap-3 mr-4 md:mr-12 w-auto md:w-48">
           <div className="w-8 h-8 rounded bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-md">
             <span className="text-white font-bold text-xl">X</span>
           </div>
-          <span className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 tracking-tight">XENO</span>
+          <span className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 tracking-tight hidden sm:block">XENO</span>
         </div>
         
-        <div className="relative w-96 group">
+        <div className="hidden md:block relative w-96 group">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Search size={18} className="text-gray-400 group-focus-within:text-blue-500 transition-colors" />
           </div>

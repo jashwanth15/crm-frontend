@@ -11,7 +11,7 @@ import {
   Filter
 } from 'lucide-react';
 
-export default function Sidebar({ currentView, setCurrentView }) {
+export default function Sidebar({ currentView, setCurrentView, isOpen, closeMenu }) {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Home },
     { id: 'customers', label: 'Customers', icon: Users },
@@ -22,8 +22,17 @@ export default function Sidebar({ currentView, setCurrentView }) {
   ];
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 flex flex-col h-full shadow-sm z-10">
-      <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
+    <>
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm z-20 md:hidden transition-opacity"
+          onClick={closeMenu}
+        />
+      )}
+
+      <div className={`fixed inset-y-0 left-0 transform ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 transition duration-200 ease-in-out z-30 w-64 bg-white border-r border-gray-200 flex flex-col h-full shadow-lg md:shadow-sm`}>
+        <nav className="flex-1 px-4 py-6 space-y-1 overflow-y-auto">
         {menuItems.map((item) => {
           const Icon = item.icon;
           const isActive = currentView === item.id;
@@ -64,6 +73,6 @@ export default function Sidebar({ currentView, setCurrentView }) {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 }
