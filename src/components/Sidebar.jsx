@@ -64,7 +64,10 @@ export default function Sidebar({ currentView, setCurrentView, isOpen, closeMenu
           <p className="text-xs font-semibold text-indigo-900 mb-1">Xeno AI Copilot</p>
           <p className="text-xs text-indigo-700 mb-3">Your marketing assistant is ready.</p>
           <button 
-            onClick={() => {
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
               window.dispatchEvent(new CustomEvent('open-copilot'));
             }}
             className="w-full bg-white text-indigo-600 text-sm font-medium py-1.5 rounded-lg shadow-sm border border-indigo-100 hover:bg-indigo-50 transition-colors flex items-center justify-center gap-2"
